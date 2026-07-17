@@ -1,0 +1,38 @@
+[
+  {
+    "memberId": "MSEI-2026-0001",
+    "fullName": "Dr. Ahmad Fauzi, S.E.I., M.E.",
+    "nik": "3171012345670001",
+    "gender": "Laki-laki",
+    "birthPlace": "Jakarta",
+    "birthDate": "1985-05-12",
+    "email": "ahmad.fauzi@masei.id",
+    "phone": "081234567890",
+    "education": "S3",
+    "university": "Universitas Indonesia",
+    "major": "Ekonomi Islam",
+    "graduationYear": "2018",
+    "occupation": "Akademisi",
+    "company": "UIN Syarif Hidayatullah Jakarta",
+    "position": "Dosen & Ketua Umum MASEI",
+    "joinedAt": "2026-01-10T08:30:00.000Z"
+  },
+  {
+    "memberId": "MSEI-2026-0002",
+    "fullName": "Prof. Dr. Siti Aminah, M.A.",
+    "nik": "3171012345670002",
+    "gender": "Perempuan",
+    "birthPlace": "Yogyakarta",
+    "birthDate": "1978-09-24",
+    "email": "siti.aminah@masei.id",
+    "phone": "085678901234",
+    "education": "S3",
+    "university": "UIN Sunan Kalijaga",
+    "major": "Hukum Ekonomi Syariah",
+    "graduationYear": "2012",
+    "occupation": "Peneliti",
+    "company": "Pusat Studi Ekonomi Islam Indonesia",
+    "position": "Direktur Kajian & Dewan Pakar MASEI",
+    "joinedAt": "2026-01-15T09:45:00.000Z"
+  }
+]
