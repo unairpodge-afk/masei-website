@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import AiChatbot from "@/components/AiChatbot";
 
 export const metadata = {
   title: "Majelis Sarjana Ekonomi Islam - MASEI.id",
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
             {children}
           </main>
           <Footer />
+          <AiChatbot />
         </div>
       </body>
     </html>

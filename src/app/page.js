@@ -183,6 +183,20 @@ export default function Home() {
                     <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>+62 851 6324 0059</span>
                   </div>
                 </div>
+                <div style={infoRowStyle}>
+                  <span style={{ ...infoIconStyle, background: "rgba(0, 136, 204, 0.1)", color: "#0088cc" }}>🤖</span>
+                  <div>
+                    <strong style={{ display: "block", fontSize: "14px" }}>Telegram Bot</strong>
+                    <a 
+                      href="https://t.me/masei_id_bot" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      style={{ fontSize: "14px", color: "var(--primary)", fontWeight: "700", textDecoration: "none" }}
+                    >
+                      @masei_id_bot (Konsultasi Zakat)
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
