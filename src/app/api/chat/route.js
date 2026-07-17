@@ -1,11 +1,28 @@
 import { NextResponse } from "next/server";
 
+function sanitizeReply(reply) {
+  if (!reply) return reply;
+  
+  // 1. Remove all asterisks (* and **)
+  let cleaned = reply.replace(/\*+/g, "");
+
+  // 2. Remove the word "Supabase" (case-insensitive)
+  cleaned = cleaned.replace(/supabase/gi, "sistem database");
+
+  // 3. Append the Telegram bot follow-up notice
+  cleaned = cleaned.trim() + "\n\nJika belum puas atau ingin konsultasi interaktif, silakan lanjut ke Telegram Bot kami di @masei_id_bot.";
+
+  return cleaned;
+}
+
 const SYSTEM_PROMPT = `Anda adalah MASEI AI Assistant, asisten kecerdasan buatan resmi Majelis Sarjana Ekonomi Islam (MASEI).
 Tugas Anda adalah melayani dan menjawab pertanyaan pengguna terkait:
 1. Profil MASEI: wadah para sarjana ekonomi Islam di Indonesia untuk riset, pengembangan, dan edukasi ekonomi syariah.
 2. Keanggotaan: alur pendaftaran anggota secara online di website, di mana anggota akan mendapatkan Kartu Tanda Anggota (KTA) Digital.
 3. Jurnal Ekonomi Islam: portal jurnal OJS (Open Journal Systems) MASEI di /journal yang mempermudah submit artikel ilmiah menggunakan Google Login.
-4. Zakat Portofolio: kalkulator zakat saham & emas otomatis yang terhubung ke Supabase database dan Telegram bot @masei_id_bot.
+4. Zakat Portofolio: kalkulator zakat saham & emas otomatis yang terhubung ke sistem database kami dan Telegram bot @masei_id_bot.
+
+PENTING: Jangan pernah menggunakan format markdown seperti tanda bintang (* atau **) untuk menebalkan/memiringkan teks. Berikan respon dalam bentuk teks biasa (plain text). Jangan pernah menggunakan kata "Supabase", gantilah dengan "sistem database" atau "database kami".
 
 Jawablah dalam bahasa Indonesia yang sopan, profesional, ringkas, dan informatif.`;
 
@@ -41,7 +58,7 @@ export async function POST(request) {
           const data = await response.json();
           const reply = data?.choices?.[0]?.message?.content;
           if (reply) {
-            return NextResponse.json({ reply, provider: "Groq (Llama)" });
+            return NextResponse.json({ reply: sanitizeReply(reply), provider: "Groq (Llama)" });
           }
         } else {
           console.warn(`Groq API returned error status: ${response.status}`);
@@ -76,7 +93,7 @@ export async function POST(request) {
           const data = await response.json();
           const reply = data?.choices?.[0]?.message?.content;
           if (reply) {
-            return NextResponse.json({ reply, provider: "OpenAI (GPT)" });
+            return NextResponse.json({ reply: sanitizeReply(reply), provider: "OpenAI (GPT)" });
           }
         } else {
           console.warn(`OpenAI API returned error status: ${response.status}`);
@@ -114,7 +131,7 @@ export async function POST(request) {
           const data = await response.json();
           const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text;
           if (reply) {
-            return NextResponse.json({ reply, provider: "Gemini (Gemma/Google)" });
+            return NextResponse.json({ reply: sanitizeReply(reply), provider: "Gemini (Gemma/Google)" });
           }
         } else {
           console.warn(`Gemini API returned error status: ${response.status}`);
@@ -127,7 +144,7 @@ export async function POST(request) {
     // 4. MOCK LOCAL HEURISTIC FALLBACK (Ensures it never fails/looks unlimited)
     console.log("All AI APIs exhausted or unset. Falling back to local offline heuristic assistant.");
     const reply = getLocalHeuristicsReply(message);
-    return NextResponse.json({ reply, provider: "Local Heuristics (Offline Mode)" });
+    return NextResponse.json({ reply: sanitizeReply(reply), provider: "Local Heuristics (Offline Mode)" });
 
   } catch (error) {
     console.error("Critical error in chatbot API:", error);
@@ -140,7 +157,7 @@ function getLocalHeuristicsReply(message) {
   const query = message.toLowerCase();
 
   if (query.includes("zakat")) {
-    return "Zakat Portofolio adalah salah satu program inovasi MASEI. Sistem kami dapat menghitung zakat saham dan emas Anda berdasarkan batas Nisab (85 gram emas) dengan nisbah 2,5%. Anda dapat mendaftarkan portofolio Anda via website di menu Keanggotaan, atau secara otomatis menggunakan Telegram Bot kami di @masei_id_bot.";
+    return "Zakat Portofolio adalah salah satu program inovasi MASEI. Sistem kami dapat menghitung zakat saham dan emas Anda berdasarkan batas Nisab (85 gram emas) dengan nisbah 2,5%. Anda dapat mendaftarkan portofolio Anda via website di menu Keanggotaan.";
   }
 
   if (query.includes("jurnal") || query.includes("ojs") || query.includes("naskah") || query.includes("submit")) {

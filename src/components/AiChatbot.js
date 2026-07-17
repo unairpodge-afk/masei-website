@@ -35,7 +35,11 @@ export default function AiChatbot() {
     setIsTyping(true);
 
     try {
-      const response = await fetch("/api/chat", {
+      const apiEndpoint = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://localhost:5000/chat"
+        : "/api/chat";
+
+      const response = await fetch(apiEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: userMsg.text })
