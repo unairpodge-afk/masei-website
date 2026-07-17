@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
+
+let supabase;
+function getSupabaseClient() {
+  if (!supabase) {
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error("Supabase environment variables (SUPABASE_URL, SUPABASE_KEY) are missing.");
+    }
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
 
 export async function POST(request) {
   try {
@@ -19,7 +29,7 @@ export async function POST(request) {
 
     if (text === "/cekzakat") {
       // 1. Ambil data portofolio dari Supabase
-      const { data: user, error: dbError } = await supabase
+      const { data: user, error: dbError } = await getSupabaseClient()
         .from("portofolio_zakat")
         .select("*")
         .eq("chat_id", chatId)

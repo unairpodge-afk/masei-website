@@ -1,11 +1,21 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
-const supabaseUrl = process.env.SUPABASE_URL;
-const supabaseKey = process.env.SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
+
+let supabase;
+function getSupabaseClient() {
+  if (!supabase) {
+    const supabaseUrl = process.env.SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+      throw new Error("Supabase environment variables (SUPABASE_URL, SUPABASE_KEY) are missing.");
+    }
+    supabase = createClient(supabaseUrl, supabaseKey);
+  }
+  return supabase;
+}
 
 export async function GET(request) {
   try {
@@ -14,7 +24,7 @@ export async function GET(request) {
     const komoditas = "Beras";
 
     // 2. Ambil harga kemarin dari Supabase
-    const { data: dataKemarin, error: readError } = await supabase
+    const { data: dataKemarin, error: readError } = await getSupabaseClient()
       .from("harga_komoditas")
       .select("harga")
       .eq("komoditas", komoditas)
@@ -42,7 +52,7 @@ export async function GET(request) {
     }
 
     // 5. Simpan harga hari ini ke database
-    const { error: insertError } = await supabase
+    const { error: insertError } = await getSupabaseClient()
       .from("harga_komoditas")
       .insert([{ komoditas, harga: hargaHariIni }]);
 
