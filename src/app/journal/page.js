@@ -125,10 +125,22 @@ export default function JournalPage() {
             </div>
 
             <div style={loginBodyStyle}>
-              <p style={{ fontSize: "14px", color: "var(--text-secondary)", textAlign: "center", lineHeight: "1.6", marginBottom: "32px" }}>
+              <p style={{ fontSize: "14px", color: "var(--text-secondary)", textAlign: "center", lineHeight: "1.6", marginBottom: "24px" }}>
                 Untuk melakukan penyerahan naskah jurnal (manuscript submission) atau meninjau status penelaahan editor, 
                 silakan masuk menggunakan akun Google institusi atau pribadi Anda.
               </p>
+
+              <div style={{ width: "100%", marginBottom: "32px", padding: "16px", background: "var(--bg-secondary)", borderRadius: "8px", border: "1px solid var(--border-color)", textAlign: "center" }}>
+                <strong style={{ fontSize: "13px", display: "block", marginBottom: "12px", color: "var(--text-primary)" }}>Persiapan Naskah (Unduh Template):</strong>
+                <div style={{ display: "flex", gap: "8px", justifyContent: "center", flexWrap: "wrap" }}>
+                  <a href="/templates/Template_Jurnal_MASEI_Bahasa_Indonesia.docx" download className="btn btn-outline" style={{ padding: "8px 12px", fontSize: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span>📄</span> Bhs. Indonesia
+                  </a>
+                  <a href="/templates/MASEI_Journal_Template_English.docx" download className="btn btn-outline" style={{ padding: "8px 12px", fontSize: "12px", display: "flex", alignItems: "center", gap: "6px" }}>
+                    <span>📄</span> English
+                  </a>
+                </div>
+              </div>
 
               <button 
                 onClick={handleGoogleLoginClick} 
@@ -216,6 +228,21 @@ export default function JournalPage() {
                         <option value="Policy Briefs">Policy Briefs (Kertas Kebijakan)</option>
                         <option value="Book Reviews">Book Reviews (Resensi Buku)</option>
                       </select>
+                    </div>
+
+                    <div style={templateDownloadBlockStyle}>
+                      <h4 style={{ fontSize: "15px", fontWeight: "700", marginBottom: "12px", color: "var(--primary)" }}>Unduh Template Jurnal</h4>
+                      <p style={{ fontSize: "13.5px", color: "var(--text-secondary)", marginBottom: "16px", lineHeight: "1.5" }}>
+                        Sebelum mengirimkan naskah, pastikan artikel Anda telah disesuaikan dengan format template resmi jurnal MASEI.
+                      </p>
+                      <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                        <a href="/templates/Template_Jurnal_MASEI_Bahasa_Indonesia.docx" download className="btn btn-outline" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                          <span>📄</span> Template Bahasa Indonesia
+                        </a>
+                        <a href="/templates/MASEI_Journal_Template_English.docx" download className="btn btn-outline" style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "13px" }}>
+                          <span>📄</span> English Template
+                        </a>
+                      </div>
                     </div>
 
                     <div style={checklistBlockStyle}>
@@ -678,6 +705,14 @@ const checklistBlockStyle = {
   flexDirection: "column",
   gap: "14px",
   marginBottom: "28px"
+};
+
+const templateDownloadBlockStyle = {
+  background: "rgba(59, 130, 246, 0.05)",
+  border: "1px solid rgba(59, 130, 246, 0.2)",
+  borderRadius: "8px",
+  padding: "20px 24px",
+  marginBottom: "24px"
 };
 
 const checkboxLabelStyle = {
