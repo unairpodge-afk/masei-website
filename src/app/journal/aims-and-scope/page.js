@@ -29,10 +29,15 @@ export default function AimsAndScopePage() {
           </ul>
 
           <div style={{ backgroundColor: "#f8fafc", padding: "20px", borderRadius: "8px", borderLeft: "4px solid var(--primary)" }}>
-            <h3 style={{ fontSize: "16px", fontWeight: "700", marginBottom: "8px" }}>Catatan Penting:</h3>
-            <p style={{ fontSize: "14px", margin: 0 }}>
-              Jurnal ini <strong>tidak</strong> menerima naskah dengan pendekatan multidisiplin yang berada di luar cakupan ilmu yang telah disebutkan (misalnya sains murni, kedokteran, atau teknik mesin yang tidak ada kaitannya dengan ekonomi atau manajemen).
-            </p>
+            <h3 style={{ fontSize: "16px", fontWeight: "700", marginBottom: "12px" }}>Catatan & Syarat Utama:</h3>
+            <ul style={{ margin: 0, paddingLeft: "20px", fontSize: "14px", display: "flex", flexDirection: "column", gap: "8px" }}>
+              <li>
+                <strong>Syarat Utama:</strong> Setiap naskah yang dikirimkan <strong>wajib</strong> menampilkan landasan dalil dari <strong>Al-Qur'an dan/atau Hadits</strong> yang relevan dengan topik pembahasan.
+              </li>
+              <li>
+                Jurnal ini <strong>tidak</strong> menerima naskah dengan pendekatan multidisiplin yang berada di luar cakupan ilmu yang telah disebutkan (misalnya sains murni, kedokteran, atau teknik mesin yang tidak ada kaitannya dengan ekonomi atau manajemen).
+              </li>
+            </ul>
           </div>
 
           <div style={{ marginTop: "40px", paddingTop: "24px", borderTop: "1px solid var(--border-color)", display: "flex", gap: "16px" }}>
