@@ -1,7 +1,9 @@
 import fs from "fs";
 import path from "path";
 
-const dbPath = path.join(process.cwd(), "members-db.json");
+const dbPath = process.env.NODE_ENV === "production" 
+  ? path.join("/tmp", "members-db.json") 
+  : path.join(process.cwd(), "members-db.json");
 
 const readDb = () => {
   try {

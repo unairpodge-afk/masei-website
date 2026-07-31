@@ -1,8 +1,10 @@
 import fs from "fs";
 import path from "path";
 
-// Define absolute path to local database file
-const dbPath = path.join(process.cwd(), "members-db.json");
+// Define path to local database file (use /tmp in Vercel production as cwd is read-only)
+const dbPath = process.env.NODE_ENV === "production" 
+  ? path.join("/tmp", "members-db.json") 
+  : path.join(process.cwd(), "members-db.json");
 
 // Helper function to read the database safely
 const readDb = () => {
