@@ -47,7 +47,8 @@ export async function POST(req) {
       graduationYear,
       occupation,
       company,
-      position
+      position,
+      certificateFileName
     } = body;
 
     // Validate required inputs
@@ -97,6 +98,7 @@ export async function POST(req) {
       occupation,
       company,
       position,
+      certificateFileName,
       joinedAt: new Date().toISOString()
     };
 

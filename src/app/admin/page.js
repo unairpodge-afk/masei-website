@@ -129,6 +129,7 @@ export default function AdminPage() {
                   <th style={thStyle}>Kontak (Email / WA)</th>
                   <th style={thStyle}>Pendidikan</th>
                   <th style={thStyle}>Profesi</th>
+                  <th style={thStyle}>Dokumen Ijazah</th>
                   <th style={thStyle}>Tanggal Daftar</th>
                 </tr>
               </thead>
@@ -156,6 +157,15 @@ export default function AdminPage() {
                       <td style={tdStyle}>
                         <div>{m.occupation}</div>
                         <div style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{m.company}</div>
+                      </td>
+                      <td style={tdStyle}>
+                        {m.certificateFileName ? (
+                          <div style={{ fontSize: "12px", background: "var(--bg-secondary)", padding: "4px 8px", borderRadius: "4px", display: "inline-block", wordBreak: "break-all" }}>
+                            📄 {m.certificateFileName}
+                          </div>
+                        ) : (
+                          <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>-</span>
+                        )}
                       </td>
                       <td style={tdStyle}>{new Date(m.joinedAt).toLocaleDateString("id-ID")}</td>
                     </tr>

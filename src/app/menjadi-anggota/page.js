@@ -8,6 +8,7 @@ export default function RegisterPage() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [uploadProgress, setUploadProgress] = useState(0);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -23,12 +24,31 @@ export default function RegisterPage() {
     graduationYear: "",
     occupation: "Akademisi",
     company: "",
-    position: ""
+    position: "",
+    certificateFileName: ""
   });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileUpload = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0];
+      setFormData((prev) => ({ ...prev, certificateFileName: file.name }));
+      setUploadProgress(0);
+      
+      const interval = setInterval(() => {
+        setUploadProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            return 100;
+          }
+          return prev + 25;
+        });
+      }, 200);
+    }
   };
 
   const nextStep = () => {
@@ -55,8 +75,18 @@ export default function RegisterPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError("");
+
+    if (!formData.certificateFileName) {
+      setError("Mohon unggah Salinan Ijazah S1 Ekonomi Islam (Minimal) Anda sebelum mengirimkan.");
+      return;
+    }
+    if (uploadProgress < 100) {
+      setError("Mohon tunggu hingga proses unggah file selesai.");
+      return;
+    }
+
+    setLoading(true);
 
     try {
       const response = await fetch("/api/members/register", {
@@ -321,14 +351,36 @@ export default function RegisterPage() {
                   />
                 </div>
                 
-                {/* Simulated Document Upload */}
+                {/* Document Upload */}
                 <div className="form-group col-span-2">
-                  <label className="form-label">Unggah Salinan Ijazah / KTP (Simulasi) *</label>
+                  <label className="form-label">Unggah Salinan Ijazah S1 Ekonomi Islam (Minimal) *</label>
                   <div style={uploadPlaceholderStyle}>
-                    <span style={{ fontSize: "28px" }}>📄</span>
-                    <div style={{ marginTop: "8px", fontSize: "13px", fontWeight: "600" }}>Pilih berkas untuk diunggah</div>
-                    <div style={{ fontSize: "11px", color: "var(--text-muted)" }}>Format PDF / JPG, Maksimal 5MB (Sistem akan menyimulasikan unggahan secara instan)</div>
+                    <input 
+                      type="file" 
+                      id="ijazah-upload"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={handleFileUpload}
+                      style={{ display: "none" }}
+                    />
+                    <label htmlFor="ijazah-upload" style={{ cursor: "pointer", display: "block", width: "100%" }}>
+                      <span style={{ fontSize: "28px" }}>📄</span>
+                      <div style={{ marginTop: "8px", fontSize: "13px", fontWeight: "600" }}>
+                        {formData.certificateFileName ? `Terpilih: ${formData.certificateFileName}` : "Klik untuk memilih berkas"}
+                      </div>
+                      <div style={{ fontSize: "11px", color: "var(--text-muted)", marginTop: "4px" }}>Format PDF / JPG, Maksimal 5MB</div>
+                    </label>
                   </div>
+                  {formData.certificateFileName && (
+                    <div style={{ marginTop: "12px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "12px", fontWeight: "600", marginBottom: "6px" }}>
+                        <span>Proses Unggah</span>
+                        <span>{uploadProgress}%</span>
+                      </div>
+                      <div style={{ width: "100%", height: "6px", backgroundColor: "var(--border-color)", borderRadius: "4px", overflow: "hidden" }}>
+                        <div style={{ height: "100%", backgroundColor: "var(--primary)", transition: "width 0.2s ease", width: `${uploadProgress}%` }}></div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
