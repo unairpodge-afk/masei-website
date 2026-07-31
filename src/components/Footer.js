@@ -7,10 +7,10 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Column 1: Logo & About */}
           <div className="footer-col" style={{ gridColumn: "span 2" }}>
-            <div className="footer-logo">
-              <div className="logo-icon" style={{ background: "var(--secondary)" }}>M</div>
+            <div className="footer-logo" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+              <img src="/logo.png" alt="MASEI Logo" style={{ height: "56px", width: "auto", objectFit: "contain" }} />
               <div>
-                <div className="footer-logo-text">MASEI.id</div>
+                <div className="footer-logo-text">MASEI</div>
                 <div className="footer-logo-sub">Majelis Sarjana Ekonomi Islam</div>
               </div>
             </div>
@@ -63,7 +63,7 @@ export default function Footer() {
               </div>
               <div className="footer-info-item">
                 <span className="footer-info-icon">✉️</span>
-                <span>info@masei.id</span>
+                <span>info@masei.or.id</span>
               </div>
               <div className="footer-info-item">
                 <span className="footer-info-icon">💬</span>
@@ -76,7 +76,7 @@ export default function Footer() {
         {/* Footer Bottom */}
         <div className="footer-bottom">
           <div className="footer-copyright">
-            © 2026 MASEI.id - Majelis Sarjana Ekonomi Islam Indonesia. All rights reserved.
+            © 2026 MASEI - Majelis Sarjana Ekonomi Islam Indonesia. All rights reserved.
           </div>
           <div className="footer-bottom-links">
             <Link href="#" className="footer-bottom-link">FAQ</Link>

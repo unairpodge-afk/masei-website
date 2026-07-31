@@ -172,5 +172,5 @@ function getLocalHeuristicsReply(message) {
     return "Majelis Sarjana Ekonomi Islam (MASEI) adalah organisasi bagi para sarjana ekonomi syariah di Indonesia. Visi kami adalah menjadi pusat pengkajian, riset, dan sosialisasi terdepan untuk kemajuan ekonomi syariah nasional. Detail visi-misi dan struktur organisasi kepengurusan kami dapat Anda temukan di menu Tentang Kami -> Profil.";
   }
 
-  return "Terima kasih atas pesan Anda! MASEI AI Assistant saat ini berada dalam Offline Mode karena batas kuota API eksternal sedang penuh. Jika Anda memiliki pertanyaan mendesak terkait administrasi, Anda dapat menghubungi Sekretariat Pusat MASEI melalui surel sekretariat@masei.id atau WhatsApp Center +62 851 6324 0059.";
+  return "Terima kasih atas pesan Anda! MASEI AI Assistant saat ini berada dalam Offline Mode karena batas kuota API eksternal sedang penuh. Jika Anda memiliki pertanyaan mendesak terkait administrasi, Anda dapat menghubungi Sekretariat Pusat MASEI melalui surel sekretariat@masei.or.id atau WhatsApp Center +62 851 6324 0059.";
 }

@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import AiChatbot from "@/components/AiChatbot";
 
 export const metadata = {
-  title: "Majelis Sarjana Ekonomi Islam - MASEI.id",
+  title: "MASEI (Majelis Sarjana Ekonomi Islam)",
   description: "Majelis Sarjana Ekonomi Islam (MASEI) adalah wadah para sarjana ekonomi Islam di Indonesia untuk melakukan pengkajian, riset, pengembangan, pendidikan dan sosialisasi Ekonomi Islam.",
   keywords: "MASEI, Majelis Sarjana Ekonomi Islam, Ekonomi Islam, Keuangan Syariah, Indonesia",
   authors: [{ name: "DPP MASEI" }],

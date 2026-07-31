@@ -543,7 +543,7 @@ export default function JournalPage() {
             </div>
             
             <p style={{ fontSize: "13px", color: "#5f6368", margin: "16px 0 24px 0", textAlign: "center" }}>
-              Pilih akun untuk melanjutkan ke **masei.id**
+              Pilih akun untuk melanjutkan ke **MASEI**
             </p>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
@@ -573,13 +573,13 @@ export default function JournalPage() {
 
               {/* Use another account option */}
               <div 
-                onClick={() => selectGoogleAccount("Guest User", "guest.scholar@masei.id")} 
+                onClick={() => selectGoogleAccount("Guest User", "guest.scholar@masei.or.id")} 
                 style={{ ...accountRowStyle, borderTop: "1px solid #e8eaed", marginTop: "8px" }}
               >
                 <div style={{ ...avatarCircleStyle, backgroundColor: "#f1f3f4", color: "#5f6368", fontSize: "18px" }}>👤</div>
                 <div style={{ textAlign: "left" }}>
                   <strong style={{ display: "block", fontSize: "14px", color: "#1a73e8" }}>Gunakan akun tamu</strong>
-                  <span style={{ fontSize: "12px", color: "#5f6368" }}>guest.scholar@masei.id</span>
+                  <span style={{ fontSize: "12px", color: "#5f6368" }}>guest.scholar@masei.or.id</span>
                 </div>
               </div>
             </div>

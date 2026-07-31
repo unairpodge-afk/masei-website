@@ -44,10 +44,10 @@ export default function Header() {
   return (
     <header className="site-header">
       <div className="container header-container">
-        <Link href="/" className="logo-link">
-          <div className="logo-icon">M</div>
+        <Link href="/" className="logo-link" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <img src="/logo.png" alt="MASEI Logo" style={{ height: "48px", width: "auto", objectFit: "contain" }} />
           <div className="logo-text">
-            <span className="logo-title">MASEI.id</span>
+            <span className="logo-title">MASEI</span>
             <span className="logo-subtitle">Majelis Sarjana Ekonomi Islam</span>
           </div>
         </Link>

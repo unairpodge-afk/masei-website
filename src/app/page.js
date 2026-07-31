@@ -173,7 +173,7 @@ export default function Home() {
                   <span style={infoIconStyle}>✉️</span>
                   <div>
                     <strong style={{ display: "block", fontSize: "14px" }}>Surel (Email)</strong>
-                    <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>sekretariat@masei.id</span>
+                    <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>sekretariat@masei.or.id</span>
                   </div>
                 </div>
                 <div style={infoRowStyle}>
