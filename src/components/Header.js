@@ -34,6 +34,7 @@ export default function Header() {
       type: "dropdown",
       items: [
         { label: "Jurnal Ekonomi Islam", href: "/journal" },
+        { label: "Aims and Scope", href: "/journal/aims-and-scope" },
         { label: "Policy Brief", href: "#" }
       ]
     },
