@@ -31,13 +31,13 @@ export default function WebmailHubPage() {
               Akses kotak masuk email resmi organisasi (seperti <code>support@masei.or.id</code>, <code>admin@masei.or.id</code>, dll).
             </p>
             <a
-              href="https://webmail.masei.or.id"
+              href="https://www.masei.or.id/webmail"
               target="_blank"
               rel="noopener noreferrer"
               className="btn btn-primary"
               style={{ width: "100%", padding: "12px", textDecoration: "none", textAlign: "center", fontWeight: "600" }}
             >
-              🚀 Buka Webmail (Zoho)
+              🚀 Buka Webmail (Roundcube)
             </a>
           </div>
 
