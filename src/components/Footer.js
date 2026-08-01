@@ -54,16 +54,12 @@ export default function Footer() {
               <div className="footer-info-item">
                 <span className="footer-info-icon">📍</span>
                 <span>
-                  Gedung Dhanapala Lt. 2, Jl. Dr. Wahidin No. 1, Senen Raya, Jakarta Pusat, Indonesia
+                  Surabaya, Indonesia
                 </span>
               </div>
               <div className="footer-info-item">
-                <span className="footer-info-icon">📞</span>
-                <span>(021) 384 0059</span>
-              </div>
-              <div className="footer-info-item">
                 <span className="footer-info-icon">✉️</span>
-                <span>info@masei.or.id</span>
+                <span>support@masei.or.id</span>
               </div>
               <div className="footer-info-item">
                 <span className="footer-info-icon">💬</span>

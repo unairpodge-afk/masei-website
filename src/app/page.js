@@ -157,23 +157,15 @@ export default function Home() {
             <div style={contactInfoStyle}>
               <h3 style={{ fontSize: "24px", fontWeight: "700", marginBottom: "24px" }}>Sekretariat Pusat MASEI</h3>
               <p style={{ fontSize: "15px", color: "var(--text-secondary)", lineHeight: "1.6", marginBottom: "28px" }}>
-                Gedung Dhanapala Lantai 2, Kementerian Keuangan RI, <br />
-                Jl. Dr. Wahidin Raya No. 1, Senen, Jakarta Pusat, DKI Jakarta 10710
+                Surabaya, Jawa Timur, Indonesia
               </p>
               
               <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
                 <div style={infoRowStyle}>
-                  <span style={infoIconStyle}>📞</span>
-                  <div>
-                    <strong style={{ display: "block", fontSize: "14px" }}>Telepon</strong>
-                    <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>(021) 384 0059</span>
-                  </div>
-                </div>
-                <div style={infoRowStyle}>
                   <span style={infoIconStyle}>✉️</span>
                   <div>
                     <strong style={{ display: "block", fontSize: "14px" }}>Surel (Email)</strong>
-                    <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>sekretariat@masei.or.id</span>
+                    <span style={{ fontSize: "14px", color: "var(--text-secondary)" }}>support@masei.or.id</span>
                   </div>
                 </div>
                 <div style={infoRowStyle}>

@@ -52,7 +52,7 @@ export default function ProfilPage() {
                 </li>
                 <li>
                   <strong>Tahun Berdiri:</strong> <br />
-                  <span style={{ color: "var(--text-secondary)" }}>2026</span>
+                  <span style={{ color: "var(--text-secondary)" }}>16 Oktober 2016</span>
                 </li>
                 <li>
                   <strong>Kategori Anggota:</strong> <br />
