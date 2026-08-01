@@ -3,68 +3,91 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function RoundcubeWebmailPage() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+export default function WebmailPortalPage() {
+  const [activeTab, setActiveTab] = useState("zoho");
 
   return (
     <div style={containerStyle}>
       <div style={loginCardStyle}>
         
-        {/* Roundcube Logo Sphere Icon */}
-        <div style={{ textAlign: "center", marginBottom: "28px" }}>
-          <svg width="72" height="72" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ margin: "0 auto" }}>
-            <path d="M50 15L80 32V68L50 85L20 68V32L50 15Z" fill="#38BDF8" />
-            <path d="M50 15L80 32L50 49L20 32L50 15Z" fill="#7DD3FC" />
-            <path d="M50 49V85L20 68V32L50 49Z" fill="#0284C7" />
-            <circle cx="50" cy="28" r="14" fill="#E2E8F0" />
-          </svg>
+        {/* Header Title */}
+        <div style={{ textAlign: "center", marginBottom: "24px" }}>
+          <img src="/logo.png" alt="MASEI Logo" style={{ height: "48px", margin: "0 auto 12px" }} />
+          <h1 style={{ fontSize: "20px", fontWeight: "700", color: "#1e293b" }}>Webmail MASEI</h1>
+          <p style={{ fontSize: "12.5px", color: "#64748b", marginTop: "4px" }}>
+            Pilih server layanan email resmi organisasi Anda
+          </p>
         </div>
 
-        {/* Login Form redirecting directly to cPanel Roundcube Port 2096 */}
-        <form action="https://216.198.79.1:2096/login/" method="POST" target="_blank" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-          <input type="hidden" name="goto_uri" value="/" />
-          
-          {/* Username Field */}
-          <div style={inputWrapperStyle}>
-            <span style={iconStyle}>👤</span>
-            <input
-              type="text"
-              name="user"
-              placeholder="Username (e.g. support@masei.or.id)"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              style={inputFieldStyle}
-              required
-            />
-          </div>
-
-          {/* Password Field */}
-          <div style={inputWrapperStyle}>
-            <span style={iconStyle}>🔒</span>
-            <input
-              type="password"
-              name="pass"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={inputFieldStyle}
-              required
-            />
-          </div>
-
-          {/* LOGIN Button matching exact Roundcube style */}
-          <button type="submit" style={loginBtnStyle}>
-            LOGIN
+        {/* Server Switcher Tabs */}
+        <div style={tabContainerStyle}>
+          <button
+            onClick={() => setActiveTab("zoho")}
+            style={{
+              ...tabBtnStyle,
+              backgroundColor: activeTab === "zoho" ? "#0284c7" : "transparent",
+              color: activeTab === "zoho" ? "white" : "#64748b"
+            }}
+          >
+            ✉️ Zoho Mail
           </button>
-        </form>
-
-        <div style={{ textAlign: "center", marginTop: "20px" }}>
-          <span style={{ fontSize: "13px", color: "#64748b" }}>Roundcube Webmail</span>
+          <button
+            onClick={() => setActiveTab("roundcube")}
+            style={{
+              ...tabBtnStyle,
+              backgroundColor: activeTab === "roundcube" ? "#0284c7" : "transparent",
+              color: activeTab === "roundcube" ? "white" : "#64748b"
+            }}
+          >
+            📦 Roundcube (cPanel)
+          </button>
         </div>
 
+        {/* TAB 1: ZOHO MAIL LOGIN */}
+        {activeTab === "zoho" && (
+          <div style={{ textAlign: "center", padding: "16px 0" }}>
+            <div style={{ fontSize: "40px", marginBottom: "12px" }}>🌐</div>
+            <h3 style={{ fontSize: "16px", fontWeight: "700", color: "#0f172a", marginBottom: "6px" }}>
+              Zoho Webmail Login
+            </h3>
+            <p style={{ fontSize: "13px", color: "#64748b", lineHeight: "1.5", marginBottom: "20px" }}>
+              Masuk ke kotak pesan email resmi organisasi (seperti <code>support@masei.or.id</code>) melalui server resmi Zoho Mail.
+            </p>
+            <a
+              href="https://mail.zoho.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={actionBtnStyle}
+            >
+              🚀 Buka Webmail Zoho (mail.zoho.com)
+            </a>
+          </div>
+        )}
+
+        {/* TAB 2: ROUNDCUBE CPANEL LOGIN */}
+        {activeTab === "roundcube" && (
+          <div style={{ textAlign: "center", padding: "16px 0" }}>
+            <div style={{ fontSize: "40px", marginBottom: "12px" }}>📦</div>
+            <h3 style={{ fontSize: "16px", fontWeight: "700", color: "#0f172a", marginBottom: "6px" }}>
+              Roundcube cPanel Webmail
+            </h3>
+            <p style={{ fontSize: "13px", color: "#64748b", lineHeight: "1.5", marginBottom: "20px" }}>
+              Masuk ke server Webmail Roundcube cPanel hosting melalui Port 2096.
+            </p>
+            <a
+              href="https://masei.or.id:2096"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={actionBtnStyle}
+            >
+              🚀 Buka Roundcube Webmail (Port 2096)
+            </a>
+          </div>
+        )}
+
+        {/* Footer Link */}
         <div style={{ textAlign: "center", marginTop: "24px", paddingTop: "16px", borderTop: "1px solid #e2e8f0" }}>
-          <Link href="/" style={{ fontSize: "12px", color: "#0284c7", textDecoration: "none" }}>
+          <Link href="/" style={{ fontSize: "12.5px", color: "#0284c7", textDecoration: "none", fontWeight: "600" }}>
             ← Kembali ke Beranda MASEI
           </Link>
         </div>
@@ -85,51 +108,41 @@ const containerStyle = {
 
 const loginCardStyle = {
   backgroundColor: "#ffffff",
-  borderRadius: "8px",
-  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.01)",
+  borderRadius: "12px",
+  boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.08)",
   border: "1px solid #e2e8f0",
-  padding: "40px 32px",
+  padding: "36px 28px",
   width: "100%",
-  maxWidth: "380px"
+  maxWidth: "420px"
 };
 
-const inputWrapperStyle = {
+const tabContainerStyle = {
   display: "flex",
-  alignItems: "center",
-  backgroundColor: "#ffffff",
-  border: "1px solid #cbd5e1",
-  borderRadius: "4px",
-  overflow: "hidden"
-};
-
-const iconStyle = {
-  padding: "10px 12px",
   backgroundColor: "#f1f5f9",
-  borderRight: "1px solid #cbd5e1",
-  fontSize: "14px",
-  color: "#64748b"
+  borderRadius: "8px",
+  padding: "4px",
+  marginBottom: "20px"
 };
 
-const inputFieldStyle = {
+const tabBtnStyle = {
   flex: 1,
+  padding: "8px 12px",
+  fontSize: "13px",
+  fontWeight: "600",
   border: "none",
-  outline: "none",
-  padding: "10px 12px",
-  fontSize: "14px",
-  color: "#1e293b",
-  backgroundColor: "transparent"
+  borderRadius: "6px",
+  cursor: "pointer",
+  transition: "all 0.2s"
 };
 
-const loginBtnStyle = {
-  backgroundColor: "#38bdf8",
+const actionBtnStyle = {
+  display: "block",
+  backgroundColor: "#0284c7",
   color: "#ffffff",
-  border: "none",
-  borderRadius: "4px",
-  padding: "12px",
-  fontSize: "15px",
+  padding: "12px 16px",
+  borderRadius: "8px",
+  fontSize: "14px",
   fontWeight: "700",
-  letterSpacing: "0.5px",
-  cursor: "pointer",
-  marginTop: "6px",
-  transition: "background-color 0.2s"
+  textDecoration: "none",
+  textAlign: "center"
 };
