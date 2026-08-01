@@ -44,11 +44,6 @@ export default function Footer() {
                   Menjadi Member
                 </Link>
               </li>
-              <li>
-                <Link href="/webmail" className="footer-link">
-                  Portal & Webmail
-                </Link>
-              </li>
             </ul>
           </div>
 
