@@ -26,9 +26,15 @@ export async function GET(req) {
     const members = readDb();
 
     if (memberId) {
+      // Normalize ID to support MSEI-2026-001, MSEI-2026-0001, etc.
+      const normalizeId = (id) =>
+        id ? id.trim().toLowerCase().replace(/msei-(\d{4})-(\d+)/, (_, yr, num) => `msei-${yr}-${num.padStart(4, "0")}`) : "";
+
+      const queryNormalized = normalizeId(memberId);
+
       // Find specific member
       const member = members.find(
-        (m) => m.memberId.toLowerCase() === memberId.toLowerCase()
+        (m) => normalizeId(m.memberId) === queryNormalized || m.memberId.toLowerCase() === memberId.trim().toLowerCase()
       );
 
       if (!member) {

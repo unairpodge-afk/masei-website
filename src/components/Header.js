@@ -39,6 +39,7 @@ export default function Header() {
       ]
     },
     { title: "Berita & Kegiatan", href: "/#berita", type: "link" },
+    { title: "Portal & Webmail", href: "/webmail", type: "link" },
     { title: "Hubungi Kami", href: "/#kontak", type: "link" }
   ];
 

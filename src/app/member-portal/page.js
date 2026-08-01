@@ -76,6 +76,8 @@ function MemberPortalContent() {
     );
   }
 
+  const currentStatus = member.status || "APPROVED";
+
   return (
     <div className="portal-container">
       {/* Sidebar Navigation */}
@@ -85,7 +87,20 @@ function MemberPortalContent() {
           <h4 style={{ fontSize: "16px", fontWeight: "700", marginTop: "12px", color: "var(--text-primary)" }}>
             {member.fullName.split(",")[0]}
           </h4>
-          <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Anggota Aktif</span>
+          <span style={{
+            fontSize: "12px",
+            fontWeight: "700",
+            padding: "4px 10px",
+            borderRadius: "12px",
+            display: "inline-block",
+            marginTop: "6px",
+            backgroundColor: currentStatus === "PENDING" ? "#fef3c7" : currentStatus === "APPROVED" ? "#d1fae5" : "#fee2e2",
+            color: currentStatus === "PENDING" ? "#d97706" : currentStatus === "APPROVED" ? "#059669" : "#dc2626"
+          }}>
+            {currentStatus === "PENDING" && "⏳ Menunggu Verifikasi"}
+            {currentStatus === "APPROVED" && "✅ Anggota Aktif"}
+            {currentStatus === "REJECTED" && "❌ Pendaftaran Ditolak"}
+          </span>
         </div>
 
         <ul className="portal-nav">
@@ -123,13 +138,36 @@ function MemberPortalContent() {
       <main className="portal-main">
         {activeTab === "dashboard" && (
           <div>
-            <div style={congratsCardStyle}>
-              <h2 style={{ fontSize: "26px", fontWeight: "800", marginBottom: "8px" }}>Selamat Bergabung! 🎉</h2>
-              <p style={{ opacity: 0.9, fontSize: "14px", lineHeight: "1.6" }}>
-                Pendaftaran Anda di **Majelis Sarjana Ekonomi Islam (MASEI)** telah terverifikasi secara otomatis. 
-                Kartu Tanda Anggota (KTA) digital Anda kini telah aktif dan siap digunakan.
-              </p>
-            </div>
+            {currentStatus === "PENDING" && (
+              <div style={{ ...congratsCardStyle, background: "linear-gradient(135deg, #d97706 0%, #b45309 100%)", color: "white" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: "800", marginBottom: "8px" }}>⏳ Pendaftaran Sedang Dalam Verifikasi</h2>
+                <p style={{ opacity: 0.9, fontSize: "14px", lineHeight: "1.6" }}>
+                  Terima kasih <strong>{member.fullName}</strong>. Data dan berkas ijazah Anda telah masuk ke sistem MASEI dan saat ini sedang dalam **proses pemeriksaan oleh Tim Admin MASEI**.
+                  KTA Digital Anda akan otomatis aktif di halaman ini setelah verifikasi selesai disetujui.
+                </p>
+              </div>
+            )}
+
+            {currentStatus === "REJECTED" && (
+              <div style={{ ...congratsCardStyle, background: "linear-gradient(135deg, #dc2626 0%, #991b1b 100%)", color: "white" }}>
+                <h2 style={{ fontSize: "24px", fontWeight: "800", marginBottom: "8px" }}>❌ Pendaftaran Belum Disetujui</h2>
+                <p style={{ opacity: 0.9, fontSize: "14px", lineHeight: "1.6" }}>
+                  Mohon maaf, pendaftaran keanggotaan Anda belum memenuhi syarat verifikasi MASEI. Silakan hubungi Sekretariat MASEI untuk informasi lebih lanjut.
+                </p>
+              </div>
+            )}
+
+            {currentStatus === "APPROVED" && (
+              <div style={congratsCardStyle}>
+                <h2 style={{ fontSize: "26px", fontWeight: "800", marginBottom: "8px" }}>Selamat Bergabung! 🎉</h2>
+                <p style={{ opacity: 0.9, fontSize: "14px", lineHeight: "1.6" }}>
+                  Pendaftaran Anda di **Majelis Sarjana Ekonomi Islam (MASEI)** telah disetujui dan diverifikasi oleh Admin. 
+                  Kartu Tanda Anggota (KTA) digital Anda kini telah aktif dan siap digunakan.
+                </p>
+              </div>
+            )}
+
+            {currentStatus === "APPROVED" && (
 
             <div style={{ display: "flex", gap: "48px", flexWrap: "wrap", alignItems: "flex-start" }}>
               {/* KTA Digital */}
@@ -198,6 +236,7 @@ function MemberPortalContent() {
                 </div>
               </div>
             </div>
+            )}
           </div>
         )}
 

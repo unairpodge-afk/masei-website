@@ -9,6 +9,7 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [submittedMember, setSubmittedMember] = useState(null);
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -98,8 +99,7 @@ export default function RegisterPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Redirect to member portal with the new member ID
-        router.push(`/member-portal?memberId=${data.member.memberId}`);
+        setSubmittedMember(data.member);
       } else {
         setError(data.message || "Pendaftaran gagal. Silakan coba lagi.");
       }
@@ -109,6 +109,47 @@ export default function RegisterPage() {
       setLoading(false);
     }
   };
+
+  if (submittedMember) {
+    return (
+      <div style={{ background: "var(--bg-secondary)", minHeight: "100vh", padding: "60px 20px" }}>
+        <div style={{ maxWidth: "600px", margin: "0 auto", background: "white", borderRadius: "16px", padding: "40px", boxShadow: "var(--shadow-lg)", textAlign: "center" }}>
+          <div style={{ fontSize: "60px", marginBottom: "16px" }}>⏳</div>
+          <h2 style={{ fontSize: "24px", fontWeight: "800", color: "var(--primary)", marginBottom: "12px" }}>
+            Pendaftaran Berhasil Dikirim!
+          </h2>
+          <p style={{ color: "var(--text-secondary)", lineHeight: "1.6", fontSize: "15px", marginBottom: "24px" }}>
+            Terima kasih <strong>{submittedMember.fullName}</strong>. Berkas dan formulir pendaftaran Anda telah berhasil terdaftar dan saat ini sedang dalam <strong>proses verifikasi oleh Tim Admin MASEI</strong>.
+          </p>
+
+          <div style={{ background: "var(--bg-secondary)", border: "1px dashed var(--primary)", borderRadius: "12px", padding: "20px", marginBottom: "28px" }}>
+            <span style={{ fontSize: "13px", color: "var(--text-secondary)", display: "block", marginBottom: "4px" }}>Nomor ID Anggota Anda:</span>
+            <strong style={{ fontSize: "22px", fontFamily: "monospace", color: "var(--primary)" }}>{submittedMember.memberId}</strong>
+            <div style={{ marginTop: "8px", fontSize: "12px", color: "#d97706", fontWeight: "600" }}>
+              Status: ⏳ MENUNGGU VERIFIKASI ADMIN
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <button
+              onClick={() => router.push(`/member-portal?memberId=${submittedMember.memberId}`)}
+              className="btn btn-primary"
+              style={{ width: "100%", padding: "14px", fontWeight: "600" }}
+            >
+              🔍 Cek Status di Portal Anggota
+            </button>
+            <button
+              onClick={() => router.push("/")}
+              className="btn btn-outline"
+              style={{ width: "100%", padding: "12px" }}
+            >
+              Kembali ke Beranda
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ background: "var(--bg-secondary)", minHeight: "100vh", padding: "40px 0" }}>

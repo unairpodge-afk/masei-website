@@ -101,6 +101,7 @@ export async function POST(req) {
       company,
       position,
       certificateFileName,
+      status: "PENDING",
       joinedAt: new Date().toISOString()
     };
 

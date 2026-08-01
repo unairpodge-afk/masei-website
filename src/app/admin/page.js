@@ -58,6 +58,30 @@ export default function AdminPage() {
     setMembers([]);
   };
 
+  const handleVerifyMember = async (memberId, status) => {
+    const savedToken = sessionStorage.getItem("masei_admin_token") || password;
+    try {
+      const response = await fetch("/api/admin/members/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${savedToken}`
+        },
+        body: JSON.stringify({ memberId, status })
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setMembers((prev) =>
+          prev.map((m) => (m.memberId === memberId ? { ...m, status } : m))
+        );
+      } else {
+        alert(data.message || "Gagal memperbarui status verifikasi.");
+      }
+    } catch (err) {
+      alert("Terjadi kesalahan jaringan.");
+    }
+  };
+
   if (!isLoggedIn) {
     return (
       <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "var(--bg-secondary)" }}>
@@ -128,48 +152,85 @@ export default function AdminPage() {
                   <th style={thStyle}>NIK KTP</th>
                   <th style={thStyle}>Kontak (Email / WA)</th>
                   <th style={thStyle}>Pendidikan</th>
-                  <th style={thStyle}>Profesi</th>
-                  <th style={thStyle}>Dokumen Ijazah</th>
+                  <th style={thStyle}>Dokumen</th>
+                  <th style={thStyle}>Status</th>
                   <th style={thStyle}>Tanggal Daftar</th>
+                  <th style={thStyle}>Aksi Verifikasi</th>
                 </tr>
               </thead>
               <tbody>
                 {members.length === 0 ? (
                   <tr>
-                    <td colSpan="7" style={{ padding: "32px", textAlign: "center", color: "var(--text-muted)" }}>
+                    <td colSpan="9" style={{ padding: "32px", textAlign: "center", color: "var(--text-muted)" }}>
                       Belum ada anggota yang mendaftar.
                     </td>
                   </tr>
                 ) : (
-                  members.map((m, idx) => (
-                    <tr key={idx} style={{ borderBottom: "1px solid var(--border-color)" }}>
-                      <td style={tdStyle}><span style={{ fontFamily: "monospace", fontWeight: "600", color: "var(--primary)" }}>{m.memberId}</span></td>
-                      <td style={tdStyle}><strong>{m.fullName}</strong></td>
-                      <td style={tdStyle}><span style={{ fontFamily: "monospace", color: "var(--text-secondary)" }}>{m.nik}</span></td>
-                      <td style={tdStyle}>
-                        <div style={{ marginBottom: "4px" }}>✉️ {m.email}</div>
-                        <div>📞 {m.phone}</div>
-                      </td>
-                      <td style={tdStyle}>
-                        <div style={{ fontWeight: "600" }}>{m.education} - {m.major}</div>
-                        <div style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{m.university} ({m.graduationYear})</div>
-                      </td>
-                      <td style={tdStyle}>
-                        <div>{m.occupation}</div>
-                        <div style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{m.company}</div>
-                      </td>
-                      <td style={tdStyle}>
-                        {m.certificateFileName ? (
-                          <div style={{ fontSize: "12px", background: "var(--bg-secondary)", padding: "4px 8px", borderRadius: "4px", display: "inline-block", wordBreak: "break-all" }}>
-                            📄 {m.certificateFileName}
+                  members.map((m, idx) => {
+                    const currentStatus = m.status || "APPROVED"; // fallback to APPROVED for old data
+                    return (
+                      <tr key={idx} style={{ borderBottom: "1px solid var(--border-color)" }}>
+                        <td style={tdStyle}><span style={{ fontFamily: "monospace", fontWeight: "600", color: "var(--primary)" }}>{m.memberId}</span></td>
+                        <td style={tdStyle}><strong>{m.fullName}</strong></td>
+                        <td style={tdStyle}><span style={{ fontFamily: "monospace", color: "var(--text-secondary)" }}>{m.nik}</span></td>
+                        <td style={tdStyle}>
+                          <div style={{ marginBottom: "4px" }}>✉️ {m.email}</div>
+                          <div>📞 {m.phone}</div>
+                        </td>
+                        <td style={tdStyle}>
+                          <div style={{ fontWeight: "600" }}>{m.education} - {m.major}</div>
+                          <div style={{ fontSize: "12px", color: "var(--text-secondary)" }}>{m.university} ({m.graduationYear})</div>
+                        </td>
+                        <td style={tdStyle}>
+                          {m.certificateFileName ? (
+                            <div style={{ fontSize: "12px", background: "var(--bg-secondary)", padding: "4px 8px", borderRadius: "4px", display: "inline-block", wordBreak: "break-all" }}>
+                              📄 {m.certificateFileName}
+                            </div>
+                          ) : (
+                            <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>-</span>
+                          )}
+                        </td>
+                        <td style={tdStyle}>
+                          {currentStatus === "PENDING" && (
+                            <span style={{ backgroundColor: "#fef3c7", color: "#d97706", padding: "4px 10px", borderRadius: "20px", fontSize: "12px", fontWeight: "700" }}>
+                              ⏳ Pending
+                            </span>
+                          )}
+                          {currentStatus === "APPROVED" && (
+                            <span style={{ backgroundColor: "#d1fae5", color: "#059669", padding: "4px 10px", borderRadius: "20px", fontSize: "12px", fontWeight: "700" }}>
+                              ✅ Disetujui
+                            </span>
+                          )}
+                          {currentStatus === "REJECTED" && (
+                            <span style={{ backgroundColor: "#fee2e2", color: "#dc2626", padding: "4px 10px", borderRadius: "20px", fontSize: "12px", fontWeight: "700" }}>
+                              ❌ Ditolak
+                            </span>
+                          )}
+                        </td>
+                        <td style={tdStyle}>{new Date(m.joinedAt).toLocaleDateString("id-ID")}</td>
+                        <td style={tdStyle}>
+                          <div style={{ display: "flex", gap: "6px" }}>
+                            {currentStatus !== "APPROVED" && (
+                              <button
+                                onClick={() => handleVerifyMember(m.memberId, "APPROVED")}
+                                style={{ backgroundColor: "#059669", color: "white", border: "none", padding: "6px 12px", borderRadius: "6px", fontSize: "12px", fontWeight: "600", cursor: "pointer" }}
+                              >
+                                Setujui
+                              </button>
+                            )}
+                            {currentStatus !== "REJECTED" && (
+                              <button
+                                onClick={() => handleVerifyMember(m.memberId, "REJECTED")}
+                                style={{ backgroundColor: "#dc2626", color: "white", border: "none", padding: "6px 12px", borderRadius: "6px", fontSize: "12px", fontWeight: "600", cursor: "pointer" }}
+                              >
+                                Tolak
+                              </button>
+                            )}
                           </div>
-                        ) : (
-                          <span style={{ fontSize: "12px", color: "var(--text-muted)" }}>-</span>
-                        )}
-                      </td>
-                      <td style={tdStyle}>{new Date(m.joinedAt).toLocaleDateString("id-ID")}</td>
-                    </tr>
-                  ))
+                        </td>
+                      </tr>
+                    );
+                  })
                 )}
               </tbody>
             </table>
